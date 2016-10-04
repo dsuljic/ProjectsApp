@@ -1,0 +1,547 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Managment System | </title>
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Vendors/nprogress.css" rel="stylesheet" />
+    <link href="~/Vendors/custom.min.css" rel="stylesheet" />
+
+
+</head>
+<body class="nav-md">
+    <div class="container body" style="width:inherit;">
+        <div class="main container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <br />
+                    <div class="navbar nav_title" style="border: 0;">
+
+                        <a href='/home/home' class="site_title"><i class="fa fa-calculator"></i> <span>PMS</span></a>
+                        <br />
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src=@ViewBag.Url alt="..." class="img-circle profile_img" style="width:75px;">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>@User.Identity.Name</h2>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href='/home/home'><i class="fa fa-home"></i> Home </a>
+                                </li>
+                                <li>
+                                    <a href='/user/myprofile'><i class="fa fa-user"></i> My Profile </a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Projects <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href='/projects/browseprojects'>All Projects</a></li>
+                                        <li><a href='/projects/addnewproject'>Add New Project</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-users"></i> Clients <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href='/clients/browseclients'>All Clients</a></li>
+                                        <li><a href='/clients/addnewclient'>Add New Client</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#">All Project Managers</a></li>
+                                        <li><a href="#">Add New Project Manager</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                   <img src=@ViewBag.Url alt="">@User.Identity.Name
+                                    <span class="fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href='/user/myprofile'> Profile</a></li>
+                                    <li><a href='/user/logout'><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                  </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="row tile_count">
+                    <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-edit"></i> Total Projects</span>
+                        <div class="count">@ViewBag.TP</div>
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-users"></i> Total Clients</span>
+                        <div class="count">@ViewBag.TC</div>
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-users"></i> Total Project Managers</span>
+                        <div class="count">@ViewBag.TPM</div>
+       </div>
+                    <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+                        <span class="count_top"><i class="fa fa-money"></i> Total Cap</span>
+                        <div class="count">@ViewBag.TCap</div>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>
+                                Statistic and Analsys<small>
+                                    <br /><br />
+                                    Field of statistics touches our lives in many ways. From the daily
+                                    routines in our homes to the business of making the greatest cities run,
+                                    the effects of statistics are everywhere.
+                                </small>
+                                <br /><br />
+                            </h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Active Projects</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="canvasDoughnut"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Most successfull Managers</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Total cap</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="lineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Workers on Top 5 Biggest Projects</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="mybarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="clearfix"></div>
+    </div>
+   </div>
+    <!-- jQuery -->
+        </div>
+    <script src="~/Vendors/jquery.min.js"></script>
+    <script src="~/Vendors/fastclick.js"></script>
+    <script src="~/Vendors/nprogress.js"></script>
+    <script src="~/Vendors/bootstrap.min.js"></script>
+    <script src="~/Build/custom.min.js"></script>
+    <script src="~/Chart/dist/Chart.min.js"></script>
+</body>
+
+</html>
+<script>
+    Chart.defaults.global.legend = {
+        enabled: false
+    };
+
+
+
+
+    // Doughnut chart
+    var ctx = document.getElementById("canvasDoughnut");
+    var active = 0;
+    var nonactive = 0;
+
+    function getActive() {
+        $.ajax({
+
+            url: "/Home/Active",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                active = data.a;
+            },
+            async: false
+        });
+
+        return active;
+    }
+
+    function getNonActive() {
+        $.ajax({
+            url: "/Home/Active",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                nonactive = data.na;
+            },
+            async: false
+        });
+        return nonactive;
+    }
+
+
+    var data = {
+        labels: [
+          "Active",
+          "Not Active",
+        ],
+        datasets: [{
+            data: [getActive(), getNonActive()],
+            backgroundColor: [
+              "#26B99A",
+              "#455C73",
+            ],
+            hoverBackgroundColor: [
+              "#36CAAB",
+              "#34495E",
+            ],
+        }]
+    };
+
+    var canvasDoughnut = new Chart(ctx, {
+        type: 'doughnut',
+        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+        data: data
+    });
+
+
+    //// Pie chart
+    function getBestPM() {
+        $.ajax({
+            url: "/Home/GetBestPM",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                pm = data.ps;
+            },
+            async: false
+        });
+        return pm;
+    }
+
+    function getProjectCount() {
+        $.ajax({
+            url: "/Home/GetBestPM",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                pmN = data.psN;
+            },
+            async: false
+        });
+        return pmN;
+    }
+
+    var pmN = getProjectCount();
+    var pm = getBestPM();
+  
+
+    var ctx = document.getElementById("pieChart");
+    var data = {
+        datasets: [{
+            data: [pmN[0], pmN[1], pmN[2], pmN[3]],
+            backgroundColor: [
+              "#455C73",
+              "#9B59B6",
+              "#BDC3C7",
+              "#26B99A",
+            ],
+            label: 'Leading Project Managers' // for legend
+        }],
+        labels: [ pm[0],pm[1], pm[2], pm[3]]
+    };
+
+    var pieChart = new Chart(ctx, {
+        data: data,
+        type: 'pie',
+        otpions: {
+            legend: false
+        }
+    });
+    // Line chart
+
+
+    function getCaps() {
+        $.ajax({
+            url: "/Home/GetCaps",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                caps = data.caps;
+            },
+            async: false
+        });
+        return caps;
+    }
+
+    var caps = getCaps();
+ 
+
+    var ctx = document.getElementById("lineChart");
+    var lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "Septembar", "October", "November", "December"],
+            datasets: [{
+                label: "Cap",
+                backgroundColor: "rgba(38, 185, 154, 0.31)",
+                borderColor: "rgba(38, 185, 154, 0.7)",
+                pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointBorderWidth: 1,
+                data: [caps[1], caps[2], caps[3], caps[4], caps[5], caps[6], caps[7], caps[8], caps[9], caps[10], caps[11], caps[12]]
+            }]
+        },
+    });
+
+     //Bar chart
+    function getitWorkersOnTop5Projects() {
+        $.ajax({
+            url: "/Home/GetWorkers",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                it= data.it;
+            },
+            async: false
+        });
+        return it;
+    }
+    
+
+    function getmwWorkersOnTop5Projects() {
+        $.ajax({
+            url: "/Home/GetWorkers",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                mw = data.mw;
+            },
+            async: false
+        });
+        return mw;
+    }
+
+
+    function getarWorkersOnTop5Projects() {
+        $.ajax({
+            url: "/Home/GetWorkers",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                ar = data.ar;
+            },
+            async: false
+        });
+        return ar;
+    }
+
+
+    function getengWorkersOnTop5Projects() {
+        $.ajax({
+            url: "/Home/GetWorkers",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                eng = data.eng;
+            },
+            async: false
+        });
+        return eng;
+    }
+
+
+
+
+    function getTitles() {
+        $.ajax({
+            url: "/Home/GetWorkers",
+            type: 'GET',
+            dataType: 'json',
+            data: {},
+            success: function (data) {
+                title = data.names;
+            },
+            async: false
+        });
+        return title;
+    }
+
+    var its = getitWorkersOnTop5Projects();
+    var titles = getTitles();
+    var workers = getmwWorkersOnTop5Projects();
+    var arc = getarWorkersOnTop5Projects();
+    var eng = getengWorkersOnTop5Projects();
+
+    var ctx = document.getElementById("mybarChart");
+    var mybarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [titles[0], titles[1], titles[2], titles[3], titles[4] ],
+            datasets: [{
+                label: 'Engineers',
+                backgroundColor: "#26B99A",
+                data: [eng[0], eng[1], eng[2], eng[3], eng[4]]
+            }, {
+                label: 'IT crowd',
+                backgroundColor: "#BDC3C7",
+                data: [it[0], it[1],it[2], it[3], it[4] ]
+            },
+            {
+                label: 'Architects',
+                backgroundColor: "#9B59B6",
+                data: [arc[0], arc[1], arc[2], arc[3], arc[4]]
+            }, {
+                label: 'Manual Workers',
+                backgroundColor: "#455C73",
+                data: [workers[0], workers[1], workers[2], workers[3], workers[4]]
+            }
+            ]
+        },
+       
+
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+
+
+
+    
+</script>
+
+

@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Login2";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> | Project Managment System | </title>
+      <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+      <link href="~/Vendors/nprogress.css" rel="stylesheet" />
+      <link href="~/Vendors/custom.min.css" rel="stylesheet" />
+      <script src="~/Vendors/jquery.min.js"></script>
+
+      <script>
+
+    function submitForm()
+    {
+        var pass = document.getElementById("pass").value.trim();
+        var user = document.getElementById("user").value.trim();
+            $.ajax({
+
+                url: "/Auth/Login",
+                type: 'POST',
+                dataType: 'json',
+                data: {username:user, password:pass},
+                success: function () {
+                    alert("A");
+                }
+            });
+    }
+      </script>
+</head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form onsubmit="submitForm()">
+              <h1>| Welcome back |</h1>
+              <div>
+                <input type="text" id="user" class="form-control" placeholder="Username" required="" />
+              </div>
+              <div>
+                <input type="password"  id="pass" class="form-control" placeholder="Password" required="" />
+              </div>
+              <div>
+                  <a class="reset_pass" href="#">Forgot your password?</a>
+              <br />
+                  <input type="submit" style="margin-left:42%;" class="btn btn-default" value="Login"/>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <div>
+                  <h1><i class="fa fa-calculator"></i> Project Managment System</h1>
+                  <p>©2016 All Rights Reserved.</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
+

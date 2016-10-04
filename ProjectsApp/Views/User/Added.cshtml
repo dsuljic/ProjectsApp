@@ -1,0 +1,9 @@
+﻿<META HTTP-EQUIV="Refresh" CONTENT="5;URL=@(Url.Action("BrowseProjects", "Projects"))">
+@{
+    ViewBag.Title = "Added";
+}
+
+<h2>New Project Added</h2>
+<h2> Wuhuuuu, redirecting back to list in 5s</h2>
+@Html.ActionLink("Back to List", "BrowseProjects","Projects")
+

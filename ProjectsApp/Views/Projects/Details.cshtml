@@ -1,0 +1,63 @@
+﻿@model ProjectsApp.Models.ProjectModel
+
+<div>
+    <h4>Projects</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_From)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_From)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_To)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_To)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "BrowseProjects")
+</p>

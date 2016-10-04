@@ -1,0 +1,8 @@
+﻿<META HTTP-EQUIV="Refresh" CONTENT="5;URL=@(Url.Action("BrowseProjects", "Projects"))">
+@{
+    ViewBag.Title = "LoggedIn";
+}
+
+<h2>Successfully Logged In, you will be redirected in 5 seconds</h2>
+
+@Html.ActionLink("Continue", "BrowseProjects","Projects")

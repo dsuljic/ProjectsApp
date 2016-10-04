@@ -1,0 +1,352 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+
+
+@{
+    ViewBag.Title = "My Profile";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Managment System | </title>
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Vendors/nprogress.css" rel="stylesheet" />
+    <link href="~/Vendors/custom.min.css" rel="stylesheet" />
+    <style>
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function showModalPass()
+        {
+
+            $('#passModal').modal('toggle');
+        }
+
+
+        function updatePass() {
+            var old_pass = document.getElementById('oldPass').value.trim();
+            var new_pass_1 = document.getElementById('newPass1').value.trim();
+            var new_pass_2 = document.getElementById('newPass2').value.trim();
+            if (new_pass_1 != new_pass_2)
+                alert("Please retype your new password correctly!");
+            else
+            $.ajax({
+                url: "/User/ChangePass",
+                type: 'POST',
+                dataType: 'json',
+                data: { old_pass: old_pass, new_pass: new_pass_1},
+                success: function (data) {
+                    if (data.ok = "ok")
+                        $('#passModal').modal('hide');
+                    else
+                        alert("Incorrect password!");
+                },
+                async: false
+            });
+        }
+
+
+        function showModalEdit()
+        {
+            document.getElementById('name').value = @ViewBag.Name;
+            document.getElementById('address').value = @ViewBag.Address;
+            document.getElementById('phone').value = @ViewBag.PhoneNumber;
+            document.getElementById('email').value = @ViewBag.E_mail;
+
+            $('#myModal').modal('toggle');
+        }
+
+    </script>
+
+    
+</head>
+<body class="nav-md">
+    <div class="container body" style="width:inherit;">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <br />
+                    <div class="navbar nav_title" style="border: 0;">
+
+                        <a href='/home/home' class="site_title"><i class="fa fa-calculator"></i> <span>PMS</span></a>
+                        <br />
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src=@ViewBag.Url alt="..." class="img-circle profile_img" style="width:75px;">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>@User.Identity.Name</h2>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href='/home/home'><i class="fa fa-home"></i> Home </a>
+                                </li>
+                                <li>
+                                    <a href='/user/myprofile'><i class="fa fa-user"></i> My Profile </a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Projects <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href='/projects/browseprojects'>All Projects</a></li>
+                                        <li><a href='/projects/addnewproject'>Add New Project</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-users"></i> Clients <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href='/clients/browseclients'>All Clients</a></li>
+                                        <li><a href='/clients/addnewclient'>Add New Client</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#">All Project Managers</a></li>
+                                        <li><a href="#">Add New Project Manager</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src=@ViewBag.Url alt="">@User.Identity.Name
+                                    <span class="fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href='/user/myprofile'> Profile</a></li>
+                                    <li><a href='/user/logout'><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+        <div class="right_col" role="main">
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div style="padding-left:30%;">
+                        <br/>
+                        <img src=@ViewBag.Url alt="..." style="width:225px; margin-top:5%;" >
+                        <br />
+                        <br />
+                        <a onclick="showModalPass()" href="#" style="font-size: 16px;" ><i class="fa fa-user-secret" style="margin-right:4%"></i>Change Password</a>
+                        <br/>
+
+                        <br/><a onclick="showModalEdit()" href="#" style="font-size: 16px;"><i class="fa fa-pencil" style="margin-right:4%"></i>Edit Profile</a>
+<br><br>
+
+                        <p style="font-size: 17px;"><i class="fa fa-picture-o" style="margin-right:4%"></i>Change profile image</p>
+
+                        @using (Html.BeginForm("ChangeProfile",
+"User",
+FormMethod.Post,
+new { enctype = "multipart/form-data" }))
+                        {
+                            <br />
+                            <input type="file" class="custom-file-input" name="file" id="file" />
+                            <br>
+                            <input type="submit" value="Upload Image" />
+                            <br><br>
+                            @ViewBag.Message
+                        }
+
+                        <br />
+
+
+                    </div>
+                    <br />
+                    <br />
+
+                    <br />
+
+
+                </div>
+                <div class="col-md-2">
+                    <br />
+                    <br />
+                    <br />
+                    <p style="font-size:16px; text-align:right;">| Name |</p>
+                    <br />
+                    <p style="font-size:16px; text-align:right;">| E-mail |</p>
+                    <br />
+                    <p style="font-size:16px; text-align:right;">|Phone Number |</p>
+                    <br />
+                    <p style="font-size:16px; text-align:right;">| Address |</p>
+                    <br />
+
+                </div>
+                <div class="col-md-2">
+                    <br />
+                    <br />
+                    <br />
+                    <p style="font-size:25px;">@ViewBag.Name</p>
+
+                    <p style="font-size:25px;">@ViewBag.E_mail</p>
+                    <p style="font-size:25px;">@ViewBag.PhoneNumber</p>
+                    <p style="font-size:25px;">@ViewBag.Address</p>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+
+            </div>
+            <br />
+            <br />
+         </div>
+
+
+
+    </div>
+
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" style="width:25%;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#2A3F54; color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Profile</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="usr" style="margin-left:5%;">Name</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Address</label>
+                            <input type="text" class="form-control" id="address"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Phone Number</label>
+                            <input type="text" class="form-control" id="phone"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">E-mail</label>
+                            <input type="text" class="form-control" id="email"/>
+                        </div>
+
+                    </form>
+                </div>up
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"style="background-color:#2A3F54; color:white;">Close</button>
+
+                    <button onclick="update()" type="button" class="btn btn-default" style="color:white; background-color:#1ABB9C; ">Save</button>    
+                 </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="passModal" role="dialog">
+        <div class="modal-dialog" style="width:25%;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#2A3F54; color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="usr" style="margin-left:5%;">Old Password</label>
+                            <input type="password" class="form-control" id="oldPass">
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">New Password</label>
+                            <input type="password" class="form-control" id="newPass1"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">New Password</label>
+                            <input type="password" class="form-control" id="newPass2"/>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:#2A3F54; color:white;">Close</button>
+
+                    <button onclick="updatePass()" type="button" class="btn btn-default" style="color:white; background-color:#1ABB9C; ">Save Changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery -->
+
+    <script src="~/Vendors/jquery.min.js"></script>
+    <script src="~/Vendors/fastclick.js"></script>
+    <script src="~/Vendors/nprogress.js"></script>
+    <script src="~/Vendors/bootstrap.min.js"></script>
+    <script src="~/Build/custom.min.js"></script>
+    <script src="~/Chart/dist/Chart.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
