@@ -20,6 +20,7 @@ namespace ProjectsApp.Models.DB
             this.Clients = new HashSet<Clients>();
             this.Clients1 = new HashSet<Clients>();
             this.Projects = new HashSet<Projects>();
+            this.Projects1 = new HashSet<Projects>();
         }
     
         public int Id { get; set; }
@@ -31,6 +32,7 @@ namespace ProjectsApp.Models.DB
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string imageUrl { get; set; }
+        public Nullable<byte> IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Clients> Clients { get; set; }
@@ -38,5 +40,7 @@ namespace ProjectsApp.Models.DB
         public virtual ICollection<Clients> Clients1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projects> Projects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Projects> Projects1 { get; set; }
     }
 }

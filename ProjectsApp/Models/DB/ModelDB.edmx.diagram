@@ -12,6 +12,7 @@
         <AssociationConnector Association="ProjectsDBModel.FK__Clients__Created__37A5467C" />
         <AssociationConnector Association="ProjectsDBModel.FK__Clients__MainCon__36B12243" />
         <AssociationConnector Association="ProjectsDBModel.FK__Projects__Create__38996AB5" />
+        <AssociationConnector Association="ProjectsDBModel.FK__Projects__Modifi__47DBAE45" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

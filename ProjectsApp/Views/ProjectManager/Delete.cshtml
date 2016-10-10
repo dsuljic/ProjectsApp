@@ -1,7 +1,7 @@
 ﻿
-@model ProjectsApp.Models.ClientModel
+@model ProjectsApp.Models.UserModel
 @{
-    ViewBag.Title = "Delete Client";
+    ViewBag.Title = "Delete Project Manager";
     Layout = null;
 }
 
@@ -81,7 +81,7 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li id="pm">
+                                <li>
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
@@ -128,7 +128,7 @@
                             @Html.AntiForgeryToken()
 
                             <div class="form-horizontal">
-                                <h4>Are you sure you want to delete this client?</h4>
+                                <h4>Are you sure you want to delete this project manager?</h4>
                                 <hr />
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.Id)
@@ -143,18 +143,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.MainContact, "Main Contact", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-3">
-                                        @Html.Label(Model.MainContact, null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                        @Html.Label(Model.Address, null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.DateAdded, "Date Added", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.E_mail, "E mail", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-3">
-                                        @Html.Label(Model.DateAdded.ToString("MM'/'dd'/'yyyy "), null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                                        @Html.Label("",Model.E_mail ?? "", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.E_mail, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -168,17 +168,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.PojectsOn, "Projects On", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-3">
-                                        @Html.Label(Model.Address ?? "Not provided", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                        @Html.Label(Model.PojectsOn.ToString() ?? "", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.PojectsOn, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         <input type="submit" value="Delete" class="btn btn-default" />
-                                        <input type="button" value="Cancel" class="btn btn-default" onclick="location.href = '/clients/browseclients'" />
+                                        <input type="button" value="Cancel" class="btn btn-default" onclick="location.href = '/projectmanager/browseprojectmanagers'" />
                                     </div>
                                 </div>
                             </div>
@@ -191,8 +191,8 @@
             </div>
 
         </div>
-        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId" />
-        
+
+        Add content to the page ...
     </div>
 
     <!-- jQuery -->
@@ -205,14 +205,6 @@
     <script src="~/Chart/dist/Chart.min.js"></script>
 </body>
 </html>
-<script>
-    function vis() {
 
-        if (document.getElementById("usercheck").value == 2)
-            document.getElementById("pm").style.visibility = "hidden";
-    }
-
-    vis();
-</script>
 
 

@@ -81,11 +81,11 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li id="pm">
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="#">All Project Managers</a></li>
-                                        <li><a href="#">Add New Project Manager</a></li>
+                                        <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
+                                        <li><a href="/projectmanager/addnewprojectmanager">Add New Project Manager</a></li>
                                     </ul>
                                 </li>
 
@@ -162,6 +162,64 @@
                                             @Html.ValidationMessageFor(model => model.Cap, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.EstimatedEarnings, "Estimated Earnings", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.EstimatedEarnings, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.EstimatedEarnings, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TotalStaff,"Total Staff", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.Cap, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.TotalStaff, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.EngineersOnProject, "Engineers on Project", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.EngineersOnProject, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.EngineersOnProject, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ArchitectsOnProject, "Architects on Project", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.ArchitectsOnProject, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.ArchitectsOnProject, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ITsOnProject, "IT staff", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.ITsOnProject, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.ITsOnProject, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ManualWorkersOnProject, "Manual Workers on Project", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.ManualWorkersOnProject, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.ManualWorkersOnProject, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.RiskFactor, "Risk factor", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.RiskFactor, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.RiskFactor, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+
+
+
 
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.Client_Id, "Client", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -174,6 +232,8 @@
                                             </select>
                                         </div>
                                     </div>
+                                    
+                                    
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
                                             <input type="submit" value="Create" class="btn btn-default" />
@@ -189,8 +249,8 @@
             </div>
 
         </div>
-
-        Add content to the page ...
+        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId" />
+        
     </div>
 
     <!-- jQuery -->
@@ -203,7 +263,15 @@
     <script src="~/Chart/dist/Chart.min.js"></script>
 </body>
 </html>
+<script>
+    function vis() {
 
+        if (document.getElementById("usercheck").value == 2)
+            document.getElementById("pm").style.visibility = "hidden";
+    }
+
+    vis();
+</script>
 
 
 

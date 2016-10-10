@@ -24,15 +24,18 @@ namespace ProjectsApp.Models.DB
         public int Client_Id { get; set; }
         public Nullable<byte> IsDeleted { get; set; }
         public int CreatedBy { get; set; }
-        public Nullable<int> TotalStaff { get; set; }
-        public Nullable<int> EngineersOnProject { get; set; }
-        public Nullable<int> ITsOnProject { get; set; }
-        public Nullable<int> ManualWorkersOnProject { get; set; }
-        public Nullable<int> ArchitectsOnProject { get; set; }
-        public Nullable<decimal> EstimatedEarnings { get; set; }
-        public Nullable<decimal> RiskFactor { get; set; }
+        public int TotalStaff { get; set; }
+        public int EngineersOnProject { get; set; }
+        public int ITsOnProject { get; set; }
+        public int ManualWorkersOnProject { get; set; }
+        public int ArchitectsOnProject { get; set; }
+        public decimal EstimatedEarnings { get; set; }
+        public decimal RiskFactor { get; set; }
+        public Nullable<System.DateTime> DateModified { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
     
         public virtual Clients Clients { get; set; }
         public virtual Users Users { get; set; }
+        public virtual Users Users1 { get; set; }
     }
 }

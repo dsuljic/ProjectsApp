@@ -84,11 +84,11 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li id="pm">
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="#">All Project Managers</a></li>
-                                        <li><a href="#">Add New Project Manager</a></li>
+                                        <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
+                                        <li><a href="/projectmanager/addnewprojectmanager">Add New Project Manager</a></li>
                                     </ul>
                                 </li>
 
@@ -176,6 +176,12 @@
                                     <th style="text-align:center;">
                                         @Html.ActionLink("Created By", "BrowseProjects", new { sortOrder = ViewBag.CreatedBySortParm })
                                     </th>
+                                    <th style="text-align:center;">
+                                        @Html.ActionLink("Last Modified", "BrowseProjects", new { sortOrder = ViewBag.LastModifiedSortParm })
+                                    </th>
+                                    <th style="text-align:center;">
+                                        @Html.ActionLink("Modified By", "BrowseProjects", new { sortOrder = ViewBag.ModifiedBySortParm })
+                                    </th>
                                     <th></th>
                                 </tr>
 
@@ -208,6 +214,12 @@
                                         <td style="text-align:center;">
                                             @Html.DisplayFor(modelItem => item.CreatedBy)
                                         </td>
+                                        <td style="text-align:center;">
+                                            @Html.DisplayFor(modelItem => item.DateModified)
+                                        </td>
+                                        <td style="text-align:center;">
+                                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                                        </td>
 
                                         <td>
                                             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -224,8 +236,8 @@
             </div>
 
         </div>
-
-        Add content to the page ...
+        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId" />
+        
     </div>
 
     <!-- jQuery -->
@@ -239,5 +251,13 @@
 </body>
 </html>
 
+<script>
+    function vis() {
 
+        if (document.getElementById("usercheck").value == 2)
+            document.getElementById("pm").style.visibility = "hidden";
+    }
+
+    vis();
+</script>
 

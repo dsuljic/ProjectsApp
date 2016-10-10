@@ -15,5 +15,7 @@ namespace ProjectsApp.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
+        public int PojectsOn { get; set; }
+
     }
 }

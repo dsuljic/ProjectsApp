@@ -15,10 +15,12 @@ namespace ProjectsApp.Controllers
         public ActionResult BrowseClients(string sortOrder, int? page, string searchString, string currentFilter)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
 
             ProjectManager pm = new ProjectManager();
 
-            int ipp = 3;
+            int ipp = 6;
             var pageNumber = page ?? 1; // if no page was specified in the querystring, default to the first page (1)
 
             var cli = pm.GetClients(pm.FetchClients());
@@ -100,6 +102,8 @@ namespace ProjectsApp.Controllers
         public ActionResult AddNewClient()
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager proj = new ProjectManager();
             var c = proj.FetchUsers();
             ViewBag.Users = c;
@@ -111,6 +115,8 @@ namespace ProjectsApp.Controllers
         public ActionResult AddNewClient(ClientModel np, string mainContact)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             if (ModelState.IsValid)
             {
                 ProjectManager pm = new ProjectManager();
@@ -137,7 +143,8 @@ namespace ProjectsApp.Controllers
 
         public ActionResult Edit(int id)
         {
-
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
             ProjectManager proj = new ProjectManager();
             var c = proj.FetchUsers();
@@ -160,6 +167,8 @@ namespace ProjectsApp.Controllers
         public ActionResult Edit(ClientModel user, string mainContact)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager pm = new ProjectManager();
             var c = pm.FetchUsers();
             ViewBag.Users = c;
@@ -173,10 +182,12 @@ namespace ProjectsApp.Controllers
             return View(user);
         }
 
-
+        
         public ActionResult Delete(int id)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager pm = new ProjectManager();
             Clients cli = pm.GetClientById(id);
             ClientModel cm = new ClientModel();

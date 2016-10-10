@@ -424,6 +424,7 @@
     <Content Include="fonts\fontawesome\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\skripta.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -437,7 +438,6 @@
     <Content Include="Vendors\jquery.min.js" />
     <Content Include="Vendors\nprogress.css" />
     <Content Include="Vendors\nprogress.js" />
-    <None Include="Views\Auth\Login2.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Views\Projects\BrowseProjects.cshtml" />
   </ItemGroup>
@@ -449,6 +449,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -501,7 +502,6 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Projects\AddNewProject.cshtml" />
@@ -513,6 +513,10 @@
     <Content Include="Views\Clients\Delete.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\User\MyProfile.cshtml" />
+    <Content Include="Views\ProjectManager\AddNewProjectManager.cshtml" />
+    <Content Include="Views\ProjectManager\BrowseProjectManagers.cshtml" />
+    <Content Include="Views\ProjectManager\Delete.cshtml" />
+    <Content Include="Views\ProjectManager\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

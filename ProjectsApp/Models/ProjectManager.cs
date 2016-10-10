@@ -25,12 +25,14 @@ namespace ProjectsApp.Models
                 proj.IsDeleted = 0;
                 proj.Client_Id = Convert.ToInt32(s);
                 proj.CreatedBy = Convert.ToInt32(c);
-                proj.ITsOnProject = 4;
-                proj.ManualWorkersOnProject = 30;
-                proj.EngineersOnProject = 5;
-                proj.ArchitectsOnProject = 3;
-                proj.EstimatedEarnings = 5000;
-                proj.RiskFactor = 12;
+                proj.TotalStaff = p.TotalStaff;
+                proj.ITsOnProject = p.ITsOnProject;
+                proj.ManualWorkersOnProject = p.ManualWorkersOnProject;
+                proj.EngineersOnProject = p.EngineersOnProject;
+                proj.ArchitectsOnProject = p.ArchitectsOnProject;
+                proj.EstimatedEarnings = p.EstimatedEarnings;
+                proj.RiskFactor = p.RiskFactor;
+                
                 db.Projects.Add(proj);
                 db.SaveChanges();
 
@@ -60,6 +62,8 @@ namespace ProjectsApp.Models
             }
 
         }
+
+
 
         public bool DoesTitleExist(string newtitle)
         {
@@ -178,7 +182,7 @@ namespace ProjectsApp.Models
         public double TotalCap()
         {
             double cap = 0;
-
+            
             List<Projects> p = FetchProjects();
             for (int i = 0; i < p.Count; i++)
                 if (p[i].Date_To>=DateTime.Now && p[i].Date_From<=DateTime.Now)
@@ -188,11 +192,11 @@ namespace ProjectsApp.Models
         }
 
 
-        public void UpdateProject(ProjectModel user, string selectClient,string sid, string active)
+        public void UpdateProject(ProjectModel pm, string selectClient,string sid, string active)
         {
             using (ProjectsDBEntities db = new ProjectsDBEntities())
             {
-                db.Entry(convertProjectForDB(user, selectClient, sid, active)).State = EntityState.Modified;
+                db.Entry(convertProjectForDB(pm, selectClient, sid, active)).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
@@ -249,10 +253,12 @@ namespace ProjectsApp.Models
             return cm;
         }
         
-        public string GetCreator(int id)
+        public string GetCreator(int? id)
         {
             using (ProjectsDBEntities db = new ProjectsDBEntities())
             {
+                if (id == null)
+                    return "";
                 var user = db.Users.Find(id);
                 string creator = user.Name;
                 return creator;
@@ -281,6 +287,39 @@ namespace ProjectsApp.Models
             }
         }
 
+
+
+        public List<UserModel> FetchPM()
+        {
+            using (ProjectsDBEntities db = new ProjectsDBEntities())
+            {
+
+                List <Users> ul = db.Users.Where(u=>(u.Role_Id==2 && u.IsDeleted !=1)).ToList();
+                List<UserModel> uml = new List<UserModel>();
+                foreach (Users u in ul)
+                {
+                    UserModel temp = new UserModel();
+                    temp = ConvertUserForView(u);
+
+                    uml.Add(temp);
+                }
+                return uml;
+            }
+        }
+        
+        public UserModel ConvertUserForView(Users u)
+        {
+            UserModel um = new UserModel();
+            um.Id = u.Id;
+            um.Name = u.Name;
+            um.Address = u.Address;
+            um.E_mail = u.Email;
+            um.PhoneNumber = u.PhoneNumber;
+            um.PojectsOn = GetActiveProjectsForUser(u.Id);
+            return um;
+        }
+        
+        
         public Clients GetClientById(int id)
         {
             using (ProjectsDBEntities db = new ProjectsDBEntities())
@@ -330,12 +369,16 @@ namespace ProjectsApp.Models
             pm.Cap = pr.Cap.ToString();
             pm.Client_Id = GetClient(pr.Client_Id);
             pm.CreatedBy = GetCreator(pr.CreatedBy);
-            pm.ITsOnProject = (int)pr.ITsOnProject;
-            pm.ManualWorkersOnProject = (int)pr.ManualWorkersOnProject;
-            pm.EngineersOnProject = (int)pr.EngineersOnProject;
-            pm.ArchitectsOnProject = (int)pr.ArchitectsOnProject;
-
-
+            pm.ITsOnProject = pr.ITsOnProject;
+            pm.ManualWorkersOnProject = pr.ManualWorkersOnProject;
+            pm.EngineersOnProject = pr.EngineersOnProject;
+            pm.ArchitectsOnProject = pr.ArchitectsOnProject;
+            pm.TotalStaff = pr.TotalStaff;
+            pm.RiskFactor = pr.RiskFactor;
+            pm.DateModified = pr.DateModified;
+            pm.EstimatedEarnings = pr.EstimatedEarnings;
+            
+            pm.ModifiedBy = GetCreator(pr.ModifiedBy);
             if (pr.IsActive == 0)
                 pm.IsActive = "No";
             else
@@ -353,22 +396,33 @@ namespace ProjectsApp.Models
 
         public Projects convertProjectForDB ( ProjectModel cl, string selectClient, string sid, string selectActive)
         {
-            Projects client = new Projects();
-            client.Id = Convert.ToInt32(cl.Id);
-            client.Title = cl.Title;
-            client.Date_Created = cl.Date_Created;
-            client.Cap = Convert.ToDecimal(cl.Cap);
+            Projects p = new Projects();
+            DAL d = new DAL();
+            p.Id = Convert.ToInt32(cl.Id);
+            p.Title = cl.Title;
+            p.CreatedBy = d.GetCreatedByFromName(Convert.ToInt32(cl.Id));
+            p.Date_Created = cl.Date_Created;
+            p.Cap = Convert.ToDecimal(cl.Cap);
             if (selectActive == "Yes")
-                client.IsActive = 1;
+                p.IsActive = 1;
             else
-                client.IsActive = 0;
+                p.IsActive = 0;
            
-            client.CreatedBy = Convert.ToInt32(sid);
-            client.Date_From = cl.Date_From;
-            client.Date_To = cl.Date_To;
-            client.Client_Id = Convert.ToInt32(selectClient);
+            p.Date_From = cl.Date_From;
+            p.Date_To = cl.Date_To;
+            p.Client_Id = Convert.ToInt32(selectClient);
+            p.TotalStaff = cl.TotalStaff;
+            p.RiskFactor = cl.RiskFactor;
+            p.ManualWorkersOnProject = cl.ManualWorkersOnProject;
+            p.EngineersOnProject = cl.EngineersOnProject;
+            p.EstimatedEarnings = cl.EstimatedEarnings;
+            p.ITsOnProject = cl.ITsOnProject;
+            p.ArchitectsOnProject = cl.ArchitectsOnProject;
+            p.DateModified = System.DateTime.Now;
+            p.ModifiedBy = Convert.ToInt32(sid);
 
-            return client;
+
+            return p;
         }
         
         public void UpdateClient (ClientModel c, string sid)
@@ -381,17 +435,47 @@ namespace ProjectsApp.Models
 
             }
         }
-
-        public void UpdateUser(UserModel c, string sid)
+        public bool UpdateUser(string name, string address, string phone, string email, int id)
         {
             using (ProjectsDBEntities db = new ProjectsDBEntities())
             {
-               
-               
+                var user = db.Users.Find(id);
+                user.Address = address;
+                user.Name = name;
+                user.PhoneNumber = phone;
+                user.Email = email;
+                    
+                db.SaveChanges();
+                return true;
+                
             }
         }
 
 
+        public void AddUser(UserModel um)
+        {
+            using (ProjectsDBEntities db = new ProjectsDBEntities())
+            {
+
+                Users u = new Users();
+                u.Name = um.Name;
+                u.Address = um.Address;
+                u.imageUrl = "#";
+                u.Password = um.Password;
+                u.PhoneNumber = um.PhoneNumber;
+                u.Email = um.E_mail;
+                u.Role_Id = 2;
+                u.Username = um.Username;
+                u.Projects = new List<Projects>();
+                u.Clients = new List<Clients>();
+
+                db.Users.Add(u);
+                db.SaveChanges();
+
+
+            }
+
+        }
 
 
         public void DeleteClient(int id)
@@ -487,6 +571,16 @@ namespace ProjectsApp.Models
                 var user = db.Users.Find(id);
                return user.Password;
                 
+            }
+        }
+        public int GetActiveProjectsForUser(int sid)
+        {
+            using (ProjectsDBEntities db = new ProjectsDBEntities())
+            {
+                
+                //var count = db.Database.ExecuteSqlCommand("SELECT count(CreatedBy) FROM Projects where IsActive = 1 AND CreatedBy =" + sid);
+                var count2 = db.Projects.Count(t => (t.CreatedBy == sid) && (t.IsActive==1));
+                return count2;
             }
         }
     }

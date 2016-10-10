@@ -25,5 +25,13 @@ namespace ProjectsApp.Models
             }
         }
 
+        public string Role
+        {
+            get
+            {
+                return this.FindFirst(ClaimTypes.Role).Value;
+            }
+        }
+
     }
 }

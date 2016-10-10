@@ -18,12 +18,20 @@ namespace ProjectsApp.Models
         public string Client_Id { get; set; }
         public string CreatedBy { get; set; }
 
-        public Nullable <int> EngineersOnProject { get; set; }
+        public int EngineersOnProject { get; set; }
 
-        public Nullable<int> ITsOnProject { get; set; }
+        public int ITsOnProject { get; set; }
 
-        public Nullable<int> ManualWorkersOnProject { get; set; }
-        public Nullable<int> ArchitectsOnProject { get; set; }
+        public int ManualWorkersOnProject { get; set; }
+        public int ArchitectsOnProject { get; set; }
+
+
+        public int TotalStaff { get; set; }
+        public decimal EstimatedEarnings { get; set; }
+        public decimal RiskFactor { get; set; }
+
+        public string ModifiedBy { get; set; }
+
 
 
         [DataType(DataType.Date)]
@@ -35,6 +43,9 @@ namespace ProjectsApp.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date_To { get; set; }
-      
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DateModified { get; set; }
+
     }
     }

@@ -34,14 +34,14 @@
                     <br />
                     <div class="navbar nav_title" style="border: 0;">
 
-                        <a href="index.html" class="site_title"><i class="fa fa-calculator"></i> <span>PMS</span></a>
+                        <a href="/home/home" class="site_title"><i class="fa fa-calculator"></i> <span>PMS</span></a>
                         <br />
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                            <img src=@ViewBag.Url alt="..." class="img-circle profile_img">
+                            <img src=@ViewBag.Url alt="..." class="img-circle profile_img" style="width:75px;">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -53,15 +53,19 @@
                     <!-- /menu profile quick info -->
                     <br />
                     <!-- sidebar menu -->
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
 
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Home </a>
+                                    <a href="/home/home"><i class="fa fa-home"></i> Home </a>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-user"></i> My Profile </a>
+                                    <a href="/user/myprofile"><i class="fa fa-user"></i> My Profile </a>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-edit"></i> Projects <span class="fa fa-chevron-down"></span></a>
@@ -77,11 +81,11 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li id="pm">
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="#">All Project Managers</a></li>
-                                        <li><a href="#">Add New Project Manager</a></li>
+                                        <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
+                                        <li><a href="/projectmanager/addnewprojectmanager">Add New Project Manager</a></li>
                                     </ul>
                                 </li>
 
@@ -101,7 +105,7 @@
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <img src=@ViewBag.Url alt="">@User.Identity.Name
-                                    <span class=" fa fa-angle-down"></span>
+                                    <span class= "fa fa-angle-down"></span>
                                 </a>
                                 <<ul class="dropdown-menu dropdown-usermenu pull-right">
     <li><a href='/home/myprofile'> Profile</a></li>
@@ -215,8 +219,8 @@
             </div>
 
         </div>
-
-        Add content to the page ...
+        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId" />
+       
     </div>
 
     <!-- jQuery -->
@@ -229,3 +233,12 @@
     <script src="~/Chart/dist/Chart.min.js"></script>
 </body>
 </html>
+<script>
+    function vis() {
+
+        if (document.getElementById("usercheck").value == 2)
+            document.getElementById("pm").style.visibility = "hidden";
+    }
+
+    vis();
+</script>

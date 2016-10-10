@@ -79,11 +79,11 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li id="pm">
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="#">All Project Managers</a></li>
-                                        <li><a href="#">Add New Project Manager</a></li>
+                                        <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
+                                        <li><a href="/projectmanager/addnewprojectmanager">Add New Project Manager</a></li>
                                     </ul>
                                 </li>
 
@@ -102,14 +102,14 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                   <img src=@ViewBag.Url alt="">@User.Identity.Name
+                                    <img src=@ViewBag.Url alt="">@User.Identity.Name
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li><a href='/user/myprofile'> Profile</a></li>
                                     <li><a href='/user/logout'><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                 </ul>
-                  </li>
+                            </li>
 
                         </ul>
                     </nav>
@@ -130,7 +130,7 @@
                     <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                         <span class="count_top"><i class="fa fa-users"></i> Total Project Managers</span>
                         <div class="count">@ViewBag.TPM</div>
-       </div>
+                    </div>
                     <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                         <span class="count_top"><i class="fa fa-money"></i> Total Cap</span>
                         <div class="count">@ViewBag.TCap</div>
@@ -241,10 +241,14 @@
 
                 </div>
                 <div class="clearfix"></div>
-    </div>
-   </div>
-    <!-- jQuery -->
+            </div>
         </div>
+
+        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId"/>
+                 
+
+        <!-- jQuery -->
+    </div>
     <script src="~/Vendors/jquery.min.js"></script>
     <script src="~/Vendors/fastclick.js"></script>
     <script src="~/Vendors/nprogress.js"></script>
@@ -259,8 +263,13 @@
         enabled: false
     };
 
+    function vis()
+    {
+        if (document.getElementById("usercheck").value == 2)
+            document.getElementById("pm").style.visibility = "hidden";
+    }
 
-
+    vis();
 
     // Doughnut chart
     var ctx = document.getElementById("canvasDoughnut");
@@ -354,7 +363,7 @@
 
     var pmN = getProjectCount();
     var pm = getBestPM();
-  
+
 
     var ctx = document.getElementById("pieChart");
     var data = {
@@ -396,7 +405,7 @@
     }
 
     var caps = getCaps();
- 
+
 
     var ctx = document.getElementById("lineChart");
     var lineChart = new Chart(ctx, {
@@ -431,7 +440,7 @@
         });
         return it;
     }
-    
+
 
     function getmwWorkersOnTop5Projects() {
         $.ajax({
@@ -525,7 +534,7 @@
             }
             ]
         },
-       
+
 
         options: {
             scales: {
@@ -541,7 +550,7 @@
 
 
 
-    
+
 </script>
 
 

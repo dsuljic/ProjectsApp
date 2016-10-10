@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectsApp.Models.ClientModel>
+﻿@model IEnumerable<ProjectsApp.Models.UserModel>
 
 
 @using PagedList.Mvc;
@@ -84,7 +84,7 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li id="pm">
+                                <li>
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
@@ -129,13 +129,13 @@
                             @using (Html.BeginForm())
                             {
                                 <p>
-                                    Search Clients: @Html.TextBox("SearchString", "", new { @Value = ViewBag.CurrentFilter })
+                                    Search Project Managers: @Html.TextBox("SearchString", "", new { @Value = ViewBag.CurrentFilter })
                                     <input type="submit" value="Search" />
                                 </p>
                             }
 
                             <div align="center"  backgroun-color="white">
-                            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("BrowseClients", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("BrowseProjectManagers", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                             </div>
 
 
@@ -144,25 +144,21 @@
 
 
                                     <th style="text-align:center;">
-                                        @Html.ActionLink("Name", "BrowseClients", new { sortOrder = ViewBag.NameSortParm })
+                                        @Html.ActionLink("Name", "BrowseProjectManagers", new { sortOrder = ViewBag.NameSortParm })
+                                    </th>
+                                    
+                                    <th style="text-align:center;">
+                                        @Html.ActionLink("Phone Number", "BrowseProjectManagers", new { sortOrder = ViewBag.PhoneNumberSortParm })
                                     </th>
                                     <th style="text-align:center;">
-                                        @Html.ActionLink("Date Added", "BrowseClients", new { sortOrder = ViewBag.DateAddedSortParm })
-                                    </th>
-                                    <th style="text-align:center;">
-                                        @Html.ActionLink("Main Contact", "BrowseClients", new { sortOrder = ViewBag.MainContactSortParm })
-                                    </th>
-
-
-                                    <th style="text-align:center;">
-                                        @Html.ActionLink("Phone Number", "BrowseClients", new { sortOrder = ViewBag.PhoneNumberSortParm })
-                                    </th>
-                                    <th style="text-align:center;">
-                                        @Html.ActionLink("Address", "BrowseClients", new { sortOrder = ViewBag.AddressSortParm })
+                                        @Html.ActionLink("Address", "BrowseProjectManagers", new { sortOrder = ViewBag.AddressSortParm })
                                     </th>
 
                                     <th style="text-align:center;">
-                                        @Html.ActionLink("Created By", "BrowseClients", new { sortOrder = ViewBag.CreatedBySortParm })
+                                        @Html.ActionLink("E-mail", "BrowseProjectManagers", new { sortOrder = ViewBag.EmailSortParm })
+                                    </th>
+                                    <th style="text-align:center;">
+                                        @Html.ActionLink("Projects On", "BrowseProjectManagers", new { sortOrder = ViewBag.ProjectsOnSortParm })
                                     </th>
                                     <th></th>
                                 </tr>
@@ -176,12 +172,6 @@
                                             @Html.DisplayFor(modelItem => item.Name)
                                         </td>
                                         <td style="text-align:center;">
-                                            @Html.DisplayFor(modelItem => item.DateAdded)
-                                        </td>
-                                        <td style="text-align:center;">
-                                            @Html.DisplayFor(modelItem => item.MainContact)
-                                        </td>
-                                        <td style="text-align:center;" width="15%">
                                             @Html.DisplayFor(modelItem => item.PhoneNumber)
                                         </td>
                                         <td style="text-align:center;" width="15%">
@@ -189,12 +179,16 @@
                                         </td>
 
                                         <td style="text-align:center;" width="15%">
-                                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                                            @Html.DisplayFor(modelItem => item.E_mail)
+                                        </td>
+                                        <td style="text-align:center;" width="15%">
+                                            @Html.DisplayFor(modelItem => item.PojectsOn)
                                         </td>
 
                                         <td>
                                             @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "lnkDelete" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "lnkDelete" }) 
+                                            
                                         </td>
                                     </tr>
                                 }
@@ -207,9 +201,8 @@
             </div>
 
         </div>
-        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId" />
 
-
+        Add content to the page ...
     </div>
 
     <!-- jQuery -->
@@ -220,19 +213,65 @@
     <script src="~/Vendors/bootstrap.min.js"></script>
     <script src="~/Build/custom.min.js"></script>
     <script src="~/Chart/dist/Chart.min.js"></script>
+
+    <div class="modal fade" id="emailModal" role="dialog">
+        <div class="modal-dialog" style="width:25%;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#2A3F54; color:white;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter your e-mail</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+
+                        <div class="form-group">
+                            <label for="usr">E-mail</label>
+                            <input type="text" class="form-control" id="email1" />
+                        </div>
+                        
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:#2A3F54; color:white;">Close</button>
+
+                    <button id="sendEmail" type="button" class="btn btn-default" style="color:white; background-color:#1ABB9C; ">Send e-mail</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>
 
-<script>
-    function vis() {
-        
-        if (document.getElementById("usercheck").value == 2)
-            document.getElementById("pm").style.visibility = "hidden";
-            document.getElementById("pm2").style.visibility = "hidden";
-    }
+@*<script>
 
-    vis();
-</script>
+    document.getElementById("sendMail").onclick = function () {
+        $('#emailModal').modal('toggle');
+    };
 
+    document.getElementById("sendEmail").onclick = function () {
 
+        var text = document.getElementById('email1').value.trim();
+ 
+            $.ajax({
+                url: "/Projectmanager/SendMail",
+                type: 'POST',
+                dataType: 'json',
+                data: { email: email1 },
+                success: function (data) {
+                    if (data.ok == "ok") {
+                        $('#emailModal').modal('hide');
+                    }
+                    else {
+
+                        alert("Non-existing e-mail");
+                    }
+                },
+                async: false
+            });
+    };
+</script>*@
 

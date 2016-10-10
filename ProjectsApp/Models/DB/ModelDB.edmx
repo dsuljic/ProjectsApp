@@ -32,13 +32,15 @@
           <Property Name="Client_Id" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="tinyint" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="TotalStaff" Type="int" />
-          <Property Name="EngineersOnProject" Type="int" />
-          <Property Name="ITsOnProject" Type="int" />
-          <Property Name="ManualWorkersOnProject" Type="int" />
-          <Property Name="ArchitectsOnProject" Type="int" />
-          <Property Name="EstimatedEarnings" Type="decimal" Precision="13" Scale="2" />
-          <Property Name="RiskFactor" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="TotalStaff" Type="int" Nullable="false" />
+          <Property Name="EngineersOnProject" Type="int" Nullable="false" />
+          <Property Name="ITsOnProject" Type="int" Nullable="false" />
+          <Property Name="ManualWorkersOnProject" Type="int" Nullable="false" />
+          <Property Name="ArchitectsOnProject" Type="int" Nullable="false" />
+          <Property Name="EstimatedEarnings" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="RiskFactor" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -53,6 +55,7 @@
           <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="imageUrl" Type="varchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="tinyint" />
         </EntityType>
         <Association Name="FK__Clients__Created__37A5467C">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -90,6 +93,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Projects__Modifi__47DBAE45">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProjectsDBModelStoreContainer">
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
@@ -103,6 +118,10 @@
             <End Role="Clients" EntitySet="Clients" />
           </AssociationSet>
           <AssociationSet Name="FK__Projects__Create__38996AB5" Association="Self.FK__Projects__Create__38996AB5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Projects__Modifi__47DBAE45" Association="Self.FK__Projects__Modifi__47DBAE45">
             <End Role="Users" EntitySet="Users" />
             <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
@@ -143,13 +162,16 @@
           <Property Name="IsDeleted" Type="Byte" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="ProjectsDBModel.FK__Projects__Create__38996AB5" FromRole="Projects" ToRole="Users" />
-          <Property Name="TotalStaff" Type="Int32" />
-          <Property Name="EngineersOnProject" Type="Int32" />
-          <Property Name="ITsOnProject" Type="Int32" />
-          <Property Name="ManualWorkersOnProject" Type="Int32" />
-          <Property Name="ArchitectsOnProject" Type="Int32" />
-          <Property Name="EstimatedEarnings" Type="Decimal" Precision="13" Scale="2" />
-          <Property Name="RiskFactor" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="TotalStaff" Type="Int32" Nullable="false" />
+          <Property Name="EngineersOnProject" Type="Int32" Nullable="false" />
+          <Property Name="ITsOnProject" Type="Int32" Nullable="false" />
+          <Property Name="ManualWorkersOnProject" Type="Int32" Nullable="false" />
+          <Property Name="ArchitectsOnProject" Type="Int32" Nullable="false" />
+          <Property Name="EstimatedEarnings" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="RiskFactor" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <NavigationProperty Name="Users1" Relationship="ProjectsDBModel.FK__Projects__Modifi__47DBAE45" FromRole="Projects" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -167,6 +189,8 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="imageUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Byte" />
+          <NavigationProperty Name="Projects1" Relationship="ProjectsDBModel.FK__Projects__Modifi__47DBAE45" FromRole="Users" ToRole="Projects" />
         </EntityType>
         <Association Name="FK_Projects_Clients">
           <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
@@ -197,6 +221,10 @@
             <End Role="Clients" EntitySet="Clients" />
           </AssociationSet>
           <AssociationSet Name="FK__Projects__Create__38996AB5" Association="ProjectsDBModel.FK__Projects__Create__38996AB5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Projects__Modifi__47DBAE45" Association="ProjectsDBModel.FK__Projects__Modifi__47DBAE45">
             <End Role="Users" EntitySet="Users" />
             <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
@@ -237,6 +265,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Projects__Modifi__47DBAE45">
+          <End Type="ProjectsDBModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="ProjectsDBModel.Projects" Role="Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -260,6 +300,8 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectsDBModel.Projects">
               <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="RiskFactor" ColumnName="RiskFactor" />
                 <ScalarProperty Name="EstimatedEarnings" ColumnName="EstimatedEarnings" />
                 <ScalarProperty Name="ArchitectsOnProject" ColumnName="ArchitectsOnProject" />
@@ -283,6 +325,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ProjectsDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="imageUrl" ColumnName="imageUrl" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />

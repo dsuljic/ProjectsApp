@@ -1,7 +1,7 @@
 ﻿@model ProjectsApp.Models.StartupLogin.LogInModel
 
 @{
-    ViewBag.Title = "Login2";
+    ViewBag.Title = "Log In";
     Layout = null;
 }
 
@@ -62,7 +62,7 @@
 
 
               <div>
-                  <a class="reset_pass" href="#">Forgot your password?</a>
+                  <a class="reset_pass" href="#" id="forgotPass">Forgot your password?</a>
               <br />
                   <input type="submit" style="margin-left:42%;" class="btn btn-default" value="Login"/>
               </div>
@@ -81,6 +81,76 @@
         </div>
       </div>
     </div>
+      <script src="~/Vendors/jquery.min.js"></script>
+      <script src="~/Vendors/fastclick.js"></script>
+      <script src="~/Vendors/nprogress.js"></script>
+      <script src="~/Vendors/bootstrap.min.js"></script>
+      <script src="~/Build/custom.min.js"></script>
+
+      <div class="modal fade" id="emailModal" role="dialog">
+          <div class="modal-dialog" style="width:25%;">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color:#2A3F54; color:white;">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Enter your e-mail</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form>
+                          
+                          <div class="form-group">
+                              <label for="usr">E-mail</label>
+                              <input type="email" class="form-control" id="email1" />
+                          </div>
+                          <div class="form-group">
+                              <label for="usr">Retype e-mail</label>
+                              <input type="email" class="form-control" id="email2" />
+                          </div>
+
+
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:#2A3F54; color:white;">Close</button>
+
+                      <button id="sendEmail" type="button" class="btn btn-default" style="color:white; background-color:#1ABB9C; ">Send e-mail</button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
   </body>
 </html>
 
+<script>
+
+    document.getElementById("forgotPass").onclick = function () {
+        $('#emailModal').modal('toggle');
+    };
+
+    document.getElementById("sendEmail").onclick = function () {
+        
+        var email1 = document.getElementById('email1').value.trim();
+        var email2 = document.getElementById('email2').value.trim();
+        if (email1 != email2)
+            alert("Please retype your e-mail correctly!");
+        else
+            $.ajax({
+                url: "/User/SendPass",
+                type: 'POST',
+                dataType: 'json',
+                data: { email: email1 },
+                success: function (data) {
+                    if (data.ok == "ok") {
+                        $('#emailModal').modal('hide');
+                    }
+                    else {
+                        
+                        alert("Non-existing e-mail");
+                    }
+                },
+                async: false
+            });
+    };
+</script>

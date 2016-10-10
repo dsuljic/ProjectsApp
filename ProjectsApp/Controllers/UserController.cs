@@ -20,10 +20,25 @@ namespace ProjectsApp.Controllers
     {
         // GET: User
 
-
+     
+        public ActionResult MyProfile(HttpPostedFileBase file)
+        {
+            ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL dal = new Models.DAL();
+            UserModel um = dal.getUserById(Convert.ToInt32(CurrentUser.Sid));
+            ViewBag.Name = um.Name;
+            ViewBag.Address = um.Address;
+            ViewBag.PhoneNumber = um.PhoneNumber;
+            ViewBag.E_mail = um.E_mail;
+            ViewBag.RoleId = dal.getRoleID(CurrentUser.Role);
+            return View();
             
+        }
+
 
         
+
+
 
         public ActionResult LogOut()
         {
@@ -41,21 +56,21 @@ namespace ProjectsApp.Controllers
         }
         
 
-        [HttpPost]
+       // [HttpPost]
 
       
+        //public ActionResult MyProfile(HttpPostedFileBase file)
+        //{
+        //    ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+        //    DAL dal = new Models.DAL();
+        //    UserModel um = dal.getUserById(Convert.ToInt32(CurrentUser.Sid));
+        //    ViewBag.Name = um.Name;
+        //    ViewBag.Address = um.Address;
+        //    ViewBag.PhoneNumber = um.PhoneNumber;
+        //    ViewBag.E_mail = um.E_mail;
+        //    return View();
+        //}
 
-        public ActionResult MyProfile(HttpPostedFileBase file)
-        {
-            ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
-            DAL dal = new Models.DAL();
-            UserModel um = dal.getUserById(Convert.ToInt32(CurrentUser.Sid));
-            ViewBag.Name = um.Name;
-            ViewBag.Address = um.Address;
-            ViewBag.PhoneNumber = um.PhoneNumber;
-            ViewBag.E_mail = um.E_mail;
-            return View();
-        }
         [HttpPost]
             public ActionResult ChangeProfile(HttpPostedFileBase file)
         {
@@ -93,5 +108,35 @@ namespace ProjectsApp.Controllers
                 oks = "no";
             return Json(new { ok = oks}, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult SendPass(string email)
+        {
+
+            DAL d = new DAL();
+            string oks = "";
+            bool ok = d.SendEmailWithPass(email);
+            if (ok == true)
+                oks = "ok";
+            else
+                oks = "no";
+            return Json(new { ok = oks }, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        public JsonResult UpdateUser(string name, string address, string phone, string email)
+    {
+
+        ProjectManager pm = new ProjectManager();
+        string oks = "";
+        bool ok = pm.UpdateUser(name, address, phone, email, Convert.ToInt32(CurrentUser.Sid));
+        if (ok == true)
+            oks = "ok";
+        else
+            oks = "no";
+        return Json(new { ok = oks }, JsonRequestBehavior.AllowGet);
     }
+}
+
 }

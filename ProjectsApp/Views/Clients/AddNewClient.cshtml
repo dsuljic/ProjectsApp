@@ -81,11 +81,11 @@
                                         <li><a href='/clients/addnewclient'>Add New Client</a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li id="pm">
                                     <a><i class="fa fa-users"></i> Project Managers <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="#">All Project Managers</a></li>
-                                        <li><a href="#">Add New Project Manager</a></li>
+                                        <li><a href="/projectmanager/browseprojectmanagers">All Project Managers</a></li>
+                                        <li><a href="/projectmanager/addnewprojectmanager">Add New Project Manager</a></li>
                                     </ul>
                                 </li>
 
@@ -184,6 +184,7 @@
             </div>
 
         </div>
+        <input id="usercheck" type="number" style="visibility: hidden;" value="@ViewBag.RoleId" />
 
         Add content to the page ...
     </div>
@@ -198,6 +199,15 @@
     <script src="~/Chart/dist/Chart.min.js"></script>
 </body>
 </html>
+<script>
+    function vis() {
+
+        if (document.getElementById("usercheck").value == 2)
+            document.getElementById("pm").style.visibility = "hidden";
+    }
+
+    vis();
+</script>
 
 
 

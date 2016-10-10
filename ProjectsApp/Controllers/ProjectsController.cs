@@ -8,16 +8,18 @@ using System;
 
 namespace ProjectsApp.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    
     public class ProjectsController : AppController
     {
 
 
-
+        
         public ActionResult BrowseProjects(string sortOrder, int? page, string searchString, string currentFilter)
         {
 
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager proj = new ProjectManager();
 
 
@@ -117,6 +119,8 @@ namespace ProjectsApp.Controllers
         public ActionResult AddNewProject()
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager proj = new ProjectManager();
             var c = proj.FetchClients();
             ViewBag.Clients = c;
@@ -128,6 +132,8 @@ namespace ProjectsApp.Controllers
         public ActionResult AddNewProject(ProjectModel np, string selectClient)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             if (ModelState.IsValid)
             {
 
@@ -154,16 +160,17 @@ namespace ProjectsApp.Controllers
                         ModelState.AddModelError("", "Cap must be a number");
                         return View(np);
                     }
-                    ModelState.AddModelError("", "Project title already taken.");
-                    return View(np);
+                    string s = CurrentUser.Sid;
+                    pm.AddProject(np, selectClient, s);
+                    return RedirectToAction("BrowseProjects");
+                    
                 }
 
 
                 else
                 {
-                    string s = CurrentUser.Sid;
-                    pm.AddProject(np, selectClient, s);
-                    return RedirectToAction("BrowseProjects");
+                    ModelState.AddModelError("", "Project title already taken.");
+                    return View(np);
 
                 }
 
@@ -175,6 +182,8 @@ namespace ProjectsApp.Controllers
         public ActionResult Details(int id)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager pm = new ProjectManager();
 
             Projects p = pm.GetProjectById(id);
@@ -191,6 +200,8 @@ namespace ProjectsApp.Controllers
 
         public ActionResult Edit(int id)
         {
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
 
             ProjectManager proj = new ProjectManager();
@@ -213,6 +224,8 @@ namespace ProjectsApp.Controllers
         public ActionResult Edit(ProjectModel user, string selectClient, string selectActive)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager pm = new ProjectManager();
             var c = pm.FetchClients();
             ViewBag.Clients = c;
@@ -226,9 +239,12 @@ namespace ProjectsApp.Controllers
             return View(user);
         }
 
+        
         public ActionResult Delete(int id)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+            DAL d = new DAL();
+            ViewBag.RoleId = d.getRoleID(CurrentUser.Role);
             ProjectManager pm = new ProjectManager();
             Projects proj = pm.GetProjectById(id);
             ProjectModel p = new ProjectModel();
@@ -243,6 +259,7 @@ namespace ProjectsApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ViewBag.Url = "/Images/" + User.Identity.Name + "_profile.jpg";
+
             ProjectManager pm = new ProjectManager();
             pm.DeleteProject(id);
             return RedirectToAction("BrowseProjects");
